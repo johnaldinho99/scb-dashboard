@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sverige i siffror</title>
+  <meta name="description" content="Interaktiv dashboard med live-data från SCB." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%232a78d6'/><rect x='22' y='52' width='12' height='28' rx='3' fill='white'/><rect x='44' y='36' width='12' height='44' rx='3' fill='white'/><rect x='66' y='20' width='12' height='60' rx='3' fill='white'/></svg>" />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.5.1/dist/echarts.min.js"></script>
+</head>
+<body>
+  <div class="page">
+    <header class="header">
+      <div>
+        <h1>Sverige i siffror</h1>
+        <p class="muted">Interaktiv dashboard med live-data från SCB:s statistikdatabas</p>
+      </div>
+      <div class="header-meta">
+        <span id="fetched" class="muted small" aria-live="polite">Hämtar data från SCB…</span>
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Byt mellan ljust och mörkt tema" title="Byt tema">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M12 3a9 9 0 1 0 0 18V3z"/><circle cx="12" cy="12" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <nav id="tabs" class="tabs" role="tablist" aria-label="Välj statistik"></nav>
+
+    <section class="filters" aria-label="Filter">
+      <nav id="breadcrumb" class="breadcrumb" aria-label="Vald region"></nav>
+      <div class="period">
+        <label for="period" class="small muted">Period</label>
+        <input id="period" type="range" min="0" max="0" value="0" />
+        <output id="period-label" for="period"></output>
+      </div>
+    </section>
+
+    <p id="desc" class="desc muted small"></p>
+
+    <div id="status" class="status" hidden></div>
+
+    <main id="grid" class="grid">
+      <section id="map-card" class="card map-card">
+        <header class="card-head">
+          <h2 id="map-title"></h2>
+          <button id="map-back" class="btn small" type="button" hidden>← Hela Sverige</button>
+        </header>
+        <div id="map" class="chart chart-map" role="img" aria-label="Karta"></div>
+        <div id="map-legend" class="map-legend"></div>
+        <p class="hint small muted" id="map-hint"></p>
+      </section>
+
+      <section class="side">
+        <div id="stats" class="stats"></div>
+        <section class="card">
+          <header class="card-head">
+            <h2 id="line-title"></h2>
+            <div id="line-mode" class="seg" role="group" aria-label="Visningsläge">
+              <button type="button" data-mode="values" aria-pressed="true">Värden</button>
+              <button type="button" data-mode="index" aria-pressed="false">Index</button>
+            </div>
+          </header>
+          <div id="line" class="chart chart-line"></div>
+          <p class="hint small muted" id="line-hint">Klicka i diagrammet för att välja period.</p>
+        </section>
+      </section>
+
+      <section class="card wide">
+        <header class="card-head">
+          <h2 id="rank-title"></h2>
+          <div id="rank-view" class="seg" role="group" aria-label="Visa som">
+            <button type="button" data-view="chart" aria-pressed="true">Diagram</button>
+            <button type="button" data-view="table" aria-pressed="false">Tabell</button>
+          </div>
+        </header>
+        <div id="rank" class="chart"></div>
+        <div id="rank-table" class="table-wrap" hidden></div>
+      </section>
+    </main>
+
+    <footer class="footer small muted">
+      Källa: <a href="https://www.statistikdatabasen.scb.se/" target="_blank" rel="noopener">SCB, Statistikdatabasen</a> (CC0).
+      Kartdata: <a href="https://github.com/okfse/sweden-geojson" target="_blank" rel="noopener">okfse/sweden-geojson</a>.
+      Data hämtas live vid varje sidladdning.
+    </footer>
+  </div>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
